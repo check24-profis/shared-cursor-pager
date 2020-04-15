@@ -1,0 +1,19 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  Exclude: 
+    - /**/spec/dummy/**/*
+    - /**/bin/*
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
