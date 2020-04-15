@@ -1,10 +1,7 @@
-require:
-  - rubocop-rails
-
 AllCops:
   Exclude: 
-    - /**/spec/dummy/**/*
     - /**/bin/*
+    - /**/gemfiles/**
 
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation

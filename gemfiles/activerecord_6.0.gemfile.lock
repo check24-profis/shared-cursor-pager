@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ..
   specs:
     cursor_pager (0.1.0)
       activerecord (>= 5.2.0)
@@ -69,6 +69,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord (~> 6.0.0)
   appraisal
   cursor_pager!
   pg

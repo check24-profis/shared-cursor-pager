@@ -2,6 +2,15 @@
 
 require "bundler/setup"
 require "cursor_pager"
+require "active_record"
+
+ActiveRecord::Base.establish_connection(
+  ENV["DATABASE_URL"] ||
+    { adapter: "postgresql", database: "cursor_pager_test" }
+)
+
+load File.dirname(__FILE__) + "/schema.rb"
+require_relative "models"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
