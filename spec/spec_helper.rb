@@ -3,6 +3,7 @@
 require "bundler/setup"
 require "cursor_pager"
 require "active_record"
+require "database_cleaner/active_record"
 
 ActiveRecord::Base.establish_connection(
   ENV["DATABASE_URL"] ||
@@ -21,5 +22,16 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 end

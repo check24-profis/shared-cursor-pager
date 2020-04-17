@@ -5,4 +5,9 @@ class ApplicationRecord < ActiveRecord::Base
 end
 
 class User < ApplicationRecord
+  has_many :books
+end
+
+class Book < ApplicationRecord
+  belongs_to :user
 end

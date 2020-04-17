@@ -8,4 +8,11 @@ ActiveRecord::Schema.define do
 
     t.timestamps
   end
+
+  create_table :books, force: :cascade do |t|
+    t.string :name
+    t.integer :user_id
+
+    t.timestamps
+  end
 end
