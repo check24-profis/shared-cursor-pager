@@ -9,6 +9,14 @@ Layout/ArgumentAlignment:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+  Metrics:
+  Exclude:
+    - /**/spec/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - /**/spec/**/*
+
 Style/Documentation:
   Enabled: false
 
