@@ -36,11 +36,24 @@ module CursorPager
     end
 
     def previous_page?
-      false
+      @previous_page ||= if after_limit_value.present?
+        true
+      elsif last
+        limited_relation
+        !(@paged_nodes_offset.nil? || @paged_nodes_offset.zero?)
+      else
+        false
+      end
     end
 
     def next_page?
-      false
+      @next_page ||= if before_limit_value.present?
+        true
+      elsif first
+        sliced_relation.limit(first + 1).count == first + 1
+      else
+        false
+      end
     end
 
     def cursor_for(item)
@@ -122,8 +135,6 @@ module CursorPager
     end
 
     def apply_after(paginated_relation)
-      after_limit_value = after && limit_value_for(after)
-
       return paginated_relation if after_limit_value.blank?
 
       if order_direction == :asc
@@ -134,8 +145,6 @@ module CursorPager
     end
 
     def apply_before(paginated_relation)
-      before_limit_value = before && limit_value_for(before)
-
       return paginated_relation if before_limit_value.blank?
 
       if order_direction == :asc
@@ -143,6 +152,14 @@ module CursorPager
       else
         slice_relation(paginated_relation, ">", before_limit_value)
       end
+    end
+
+    def before_limit_value
+      @before_limit_value ||= before && limit_value_for(before)
+    end
+
+    def after_limit_value
+      @after_limit_value ||= after && limit_value_for(after)
     end
 
     def limit_value_for(cursor)
