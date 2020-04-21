@@ -3,13 +3,13 @@
 module CursorPager
   # Applies after and before cursors to a relation.
   class SliceRelation
-    attr_reader :base_relation, :order_values, :after, :before
+    attr_reader :base_relation, :order_values, :after_values, :before_values
 
-    def initialize(base_relation, order_values, after, before)
+    def initialize(base_relation, order_values, after_values, before_values)
       @base_relation = base_relation
       @order_values = order_values
-      @after = after
-      @before = before
+      @after_values = after_values
+      @before_values = before_values
     end
 
     def call
@@ -24,22 +24,22 @@ module CursorPager
     private
 
     def apply_after(relation)
-      return relation if after.blank?
+      return relation if after_values.blank?
 
       if order_values.direction == :asc
-        slice_relation(relation, ">", after)
+        slice_relation(relation, ">", after_values)
       else
-        slice_relation(relation, "<", after)
+        slice_relation(relation, "<", after_values)
       end
     end
 
     def apply_before(relation)
-      return relation if before.blank?
+      return relation if before_values.blank?
 
       if order_values.direction == :asc
-        slice_relation(relation, "<", before)
+        slice_relation(relation, "<", before_values)
       else
-        slice_relation(relation, ">", before)
+        slice_relation(relation, ">", before_values)
       end
     end
 
