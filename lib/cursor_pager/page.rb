@@ -50,7 +50,9 @@ module CursorPager
     def add_default_order
       return if sufficiently_ordered?
 
-      @order_values << OrderValue.default_for(relation, order_direction)
+      direction = order_direction || :asc
+
+      @order_values << OrderValue.new(relation, relation.primary_key, direction)
     end
 
     def sufficiently_ordered?

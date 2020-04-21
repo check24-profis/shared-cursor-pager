@@ -20,10 +20,6 @@ module CursorPager
         end
       end
 
-      def default_for(relation, order_direction)
-        new(relation, relation.primary_key, order_direction || :asc)
-      end
-
       private
 
       def from_order_string(relation, value)
