@@ -72,18 +72,24 @@ RSpec.describe CursorPager::Page do
       end
 
       context "when no item could be found for the given `after`" do
-        let(:after_cursor) { encode_cursor(double(id: relation.maximum(:id) + 1)) }
+        let(:after_cursor) do
+          encode_cursor(double(id: relation.maximum(:id) + 1))
+        end
 
         it "returns the whole collection after the cursor" do
-          expect { subject.records }.to raise_error(CursorPager::CursorNotFoundError)
+          expect { subject.records }
+            .to raise_error(CursorPager::CursorNotFoundError)
         end
       end
 
       context "when no item could be found for the given `before`" do
-        let(:before_cursor) { encode_cursor(double(id: relation.maximum(:id) + 1)) }
+        let(:before_cursor) do
+          encode_cursor(double(id: relation.maximum(:id) + 1))
+        end
 
         it "returns the whole collection after the cursor" do
-          expect { subject.records }.to raise_error(CursorPager::CursorNotFoundError)
+          expect { subject.records }
+            .to raise_error(CursorPager::CursorNotFoundError)
         end
       end
     end
@@ -206,7 +212,8 @@ RSpec.describe CursorPager::Page do
       end
     end
 
-    context "it orders by ID secondarily when ordering by a non-datetime or primary key value" do
+    context "it orders by ID secondarily when ordering by a non-datetime or "\
+      "primary key value" do
       let!(:user1) { User.create(id: 1, name: "Bob") }
       let!(:user2) { User.create(id: 2, name: "Bob") }
       let!(:user3) { User.create(id: 3, name: "Alice") }

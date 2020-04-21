@@ -3,16 +3,23 @@
 RSpec.describe CursorPager::Page do
   describe "#previous_page?" do
     context "when given `last`" do
-      let(:page) { described_class.new(User.all, last: 2) }
-
       it "returns true if it is smaller than the available edges" do
         3.times { User.create }
+        page = described_class.new(User.all, last: 2)
 
         expect(page.previous_page?).to be(true)
       end
 
       it "returns false if it equals or is bigger than the available edges" do
         2.times { User.create }
+        page = described_class.new(User.all, last: 2)
+
+        expect(page.previous_page?).to be(false)
+      end
+
+      it "does not break if the relation won't get an offset set" do
+        3.times { User.create }
+        page = described_class.new(User.limit(2), last: 3)
 
         expect(page.previous_page?).to be(false)
       end

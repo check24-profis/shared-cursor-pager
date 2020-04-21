@@ -18,23 +18,22 @@ module CursorPager
 
     def previous_page?
       @previous_page ||= if after_limit_value.present?
-        true
-      elsif last
-        limited_relation
-        !(@paged_nodes_offset.nil? || @paged_nodes_offset.zero?)
-      else
-        false
-      end
+                           true
+                         elsif last
+                           limited_relation.offset_value.to_i.positive?
+                         else
+                           false
+                         end
     end
 
     def next_page?
       @next_page ||= if before_limit_value.present?
-        true
-      elsif first
-        sliced_relation.limit(first + 1).count == first + 1
-      else
-        false
-      end
+                       true
+                     elsif first
+                       sliced_relation.limit(first + 1).count == first + 1
+                     else
+                       false
+                     end
     end
 
     def cursor_for(item)
@@ -68,73 +67,24 @@ module CursorPager
     end
 
     def limited_relation
-      return @limited_relation if defined? @limited_relation
-
-      paginated_relation = sliced_relation
-      previous_limit = paginated_relation.limit_value
-
-      if first && (previous_limit.nil? || previous_limit > first)
-        # `first` would create a stricter limit that the one already applied, so add it
-        paginated_relation = paginated_relation.limit(first)
-      end
-
-      if last
-        if (lv = paginated_relation.limit_value)
-          if last <= lv
-            # `last` is a smaller slice than the current limit, so apply it
-            offset = (paginated_relation.offset_value || 0) + (lv - last)
-            paginated_relation = paginated_relation.offset(offset)
-            paginated_relation = paginated_relation.limit(last)
-          end
-        else
-          # No limit, so get the last items
-          sliced_relation_count = @sliced_relation.count
-          offset = (paginated_relation.offset_value || 0) + sliced_relation_count - [last, sliced_relation_count].min
-          paginated_relation = paginated_relation.offset(offset)
-          paginated_relation = paginated_relation.limit(last)
-        end
-      end
-
-      @paged_nodes_offset = paginated_relation.offset_value
-      @limited_relation = paginated_relation
+      @limited_relation ||= LimitRelation.new(sliced_relation, first, last).call
     end
 
     def sliced_relation
-      return @sliced_relation if defined? @sliced_relation
-
-      paginated_relation = relation
-
-      paginated_relation = apply_order_values(paginated_relation)
-      paginated_relation = apply_after(paginated_relation)
-      paginated_relation = apply_before(paginated_relation)
-
-      @sliced_relation = paginated_relation
+      @sliced_relation ||= SliceRelation.new(
+        ordered_relation,
+        order_values,
+        after_limit_value,
+        before_limit_value
+      ).call
     end
 
-    def apply_order_values(paginated_relation)
-      order = order_values.map(&:order_string).join(", ")
-
-      paginated_relation.reorder(order)
+    def ordered_relation
+      @ordered_relation ||= relation.reorder(order_string)
     end
 
-    def apply_after(paginated_relation)
-      return paginated_relation if after_limit_value.blank?
-
-      if order_direction == :asc
-        slice_relation(paginated_relation, ">", after_limit_value)
-      else
-        slice_relation(paginated_relation, "<", after_limit_value)
-      end
-    end
-
-    def apply_before(paginated_relation)
-      return paginated_relation if before_limit_value.blank?
-
-      if order_direction == :asc
-        slice_relation(paginated_relation, "<", before_limit_value)
-      else
-        slice_relation(paginated_relation, ">", before_limit_value)
-      end
+    def order_string
+      order_values.map(&:order_string).join(", ")
     end
 
     def before_limit_value
@@ -160,12 +110,6 @@ module CursorPager
 
     def order_direction
       order_values.first&.direction
-    end
-
-    def slice_relation(paginated_relation, operator, value)
-      slice_attribute = order_values.map(&:prefixed_attribute).join(", ")
-
-      paginated_relation.where("(#{slice_attribute}) #{operator} (?)", value)
     end
   end
 end
