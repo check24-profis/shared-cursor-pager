@@ -10,7 +10,7 @@ module CursorPager
       @last = last
       @after = after
       @before = before
-      @order_values = OrderValue.from_relation(relation)
+      @order_values = OrderValues.from_relation(relation)
 
       add_default_order
       verify_order_directions!
@@ -49,7 +49,7 @@ module CursorPager
     def add_default_order
       return if sufficiently_ordered?
 
-      direction = order_direction || :asc
+      direction = order_values.direction || :asc
 
       @order_values << OrderValue.new(relation, relation.primary_key, direction)
     end
@@ -80,11 +80,7 @@ module CursorPager
     end
 
     def ordered_relation
-      @ordered_relation ||= relation.reorder(order_string)
-    end
-
-    def order_string
-      order_values.map(&:order_string).join(", ")
+      @ordered_relation ||= relation.reorder(order_values.order_string)
     end
 
     def before_limit_value
@@ -106,10 +102,6 @@ module CursorPager
       raise CursorNotFoundError, cursor if item.blank?
 
       order_values.map { |value| item[value.select_alias] }
-    end
-
-    def order_direction
-      order_values.first&.direction
     end
   end
 end

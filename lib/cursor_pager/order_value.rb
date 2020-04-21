@@ -6,30 +6,17 @@ module CursorPager
 
     attr_reader :attribute, :direction
 
-    class << self
-      # A relation's order_values can either be an empty array, an array
-      # including just one string, or an array of arel ordering nodes.
-      def from_relation(relation)
-        relation.order_values.uniq.reject(&:blank?).flat_map do |value|
-          case value
-          when Arel::Nodes::Ordering
-            new(relation, value.value.name, value.direction)
-          when String
-            from_order_string(relation, value)
-          end
-        end
+    def self.from_arel_node(relation, node)
+      new(relation, node.value.name, node.direction)
+    end
+
+    def self.from_order_string(relation, value)
+      if value.match?(PARENTHESIS_REGEX)
+        raise OrderValueError, "Order values can't include functions."
       end
 
-      private
-
-      def from_order_string(relation, value)
-        if value.match?(PARENTHESIS_REGEX)
-          raise OrderValueError, "Order values can't include functions."
-        end
-
-        value.split(",").map do |split_value|
-          new(relation, *split_value.squish.split)
-        end
+      value.split(",").map do |split_value|
+        new(relation, *split_value.squish.split)
       end
     end
 

@@ -1,70 +1,54 @@
 # frozen_string_literal: true
 
 RSpec.describe CursorPager::OrderValue do
-  describe ".from_relation" do
-    it "returns an empty collection when the order wasn't specified" do
-      relation = User.all
-      result = described_class.from_relation(relation)
+  describe ".from_arel_node" do
+    it "initializes an order value" do
+      relation = User.order(id: :asc)
+      arel_node = relation.order_values.first
 
-      expect(result.size).to eq(0)
+      order_value = described_class.from_arel_node(relation, arel_node)
+
+      expect(order_value.attribute).to eq("id")
+      expect(order_value.direction).to eq(:asc)
+    end
+  end
+
+  describe ".from_order_string" do
+    it "returns a collection of order values" do
+      order_string = "id ASC"
+      relation = User.order(order_string)
+
+      result = described_class.from_order_string(relation, order_string)
+
+      expect(result).to all(be_a(described_class))
+      expect(result.size).to eq(1)
     end
 
-    context "when relation ordering specified as string" do
-      it "returns a collection of order values" do
-        relation = User.order("id ASC")
-        result = described_class.from_relation(relation)
+    it "splits the ordering string" do
+      order_string = "id ASC, created_at"
+      relation = User.order(order_string)
 
-        expect(result).to all(be_a(described_class))
-        expect(result.size).to eq(1)
-      end
+      result = described_class.from_order_string(relation, order_string)
 
-      it "splits the ordering string" do
-        relation = User.order("id ASC, created_at")
-        result = described_class.from_relation(relation)
-
-        expect(result).to all(be_a(described_class))
-        expect(result.size).to eq(2)
-      end
-
-      it "defaults the direction to asc when it's not specified" do
-        relation = User.order("id")
-        result = described_class.from_relation(relation)
-
-        expect(result.first.direction).to eq(:asc)
-      end
-
-      it "it raises an exception when it includes a function" do
-        order = Arel.sql("COALESCE(published_at, created_at) ASC")
-        relation = User.order(order)
-
-        expect { described_class.from_relation(relation) }
-          .to raise_error(CursorPager::OrderValueError)
-      end
+      expect(result).to all(be_a(described_class))
+      expect(result.size).to eq(2)
     end
 
-    context "when relation ordering specified as hash" do
-      it "returns a collection of order values" do
-        relation = User.order(id: :asc)
-        result = described_class.from_relation(relation)
+    it "defaults the direction to asc when it's not specified" do
+      order_string = "id"
+      relation = User.order(order_string)
 
-        expect(result).to all(be_a(described_class))
-        expect(result.size).to eq(1)
-      end
+      result = described_class.from_order_string(relation, order_string)
 
-      it "parses the multiple order values" do
-        relation = User.order(id: :asc, created_at: :asc)
-        result = described_class.from_relation(relation)
+      expect(result.first.direction).to eq(:asc)
+    end
 
-        expect(result).to all(be_a(described_class))
-        expect(result.size).to eq(2)
-      end
+    it "it raises an exception when it includes a function" do
+      order_string = Arel.sql("COALESCE(published_at, created_at) ASC")
+      relation = User.order(order_string)
 
-      it "defaults the direction to asc when it's not specified" do
-        relation = User.order(:id)
-        result = described_class.from_relation(relation)
-
-        expect(result.first.direction).to eq(:asc)
-      end
+      expect { described_class.from_order_string(relation, order_string) }
+        .to raise_error(CursorPager::OrderValueError)
     end
   end
 
