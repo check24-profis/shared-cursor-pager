@@ -38,7 +38,7 @@ module CursorPager
     end
 
     def cursor_for(item)
-      Base64.strict_encode64(item.id.to_s)
+      Base64.urlsafe_encode64(item.id.to_s)
     end
 
     def records
@@ -144,7 +144,7 @@ module CursorPager
     end
 
     def limit_value_for(cursor)
-      id = decode(cursor)
+      id = Base64.urlsafe_decode64(cursor)
 
       return if id.blank?
 
@@ -154,10 +154,6 @@ module CursorPager
       raise CursorNotFoundError, cursor if item.blank?
 
       order_values.map { |value| item[value.select_alias] }
-    end
-
-    def decode(str)
-      Base64.strict_decode64(str)
     end
 
     def order_direction
