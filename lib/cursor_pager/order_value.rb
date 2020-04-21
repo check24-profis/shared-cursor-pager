@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 module CursorPager
-  class OrderValueError < StandardError
-  end
-
   class OrderValue
     PARENTHESIS_REGEX = /[\(\)]/.freeze
 
