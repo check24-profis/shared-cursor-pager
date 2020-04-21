@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module CursorPager
+  # Applies first and last limits to a relation.
   class LimitRelation
     attr_reader :base_relation, :first, :last
 

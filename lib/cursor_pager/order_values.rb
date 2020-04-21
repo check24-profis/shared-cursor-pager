@@ -3,6 +3,7 @@
 require "forwardable"
 
 module CursorPager
+  # OrderValue collection wrapper.
   class OrderValues
     extend Forwardable
     include Enumerable

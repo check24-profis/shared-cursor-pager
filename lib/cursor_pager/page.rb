@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module CursorPager
+  # The main class that coordinates the whole pagination.
   class Page
     attr_reader :relation, :first, :last, :after, :before, :order_values
 

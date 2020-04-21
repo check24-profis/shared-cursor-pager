@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module CursorPager
+  # Applies after and before cursors to a relation.
   class SliceRelation
     attr_reader :base_relation, :order_values, :after, :before
 

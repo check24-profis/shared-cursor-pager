@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module CursorPager
+  # Wraps ActiveRecord's order values.
+  # Depending on how the order of the relation is defined, ActiveRecord will
+  # give you multiple arel nodes or just one string. This deals with the
+  # differences so we don't have to do it anywhere else.
   class OrderValue
     PARENTHESIS_REGEX = /[\(\)]/.freeze
 
