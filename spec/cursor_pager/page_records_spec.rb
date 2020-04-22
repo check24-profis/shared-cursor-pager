@@ -26,6 +26,14 @@ RSpec.describe CursorPager::Page do
         end
       end
 
+      context "when given an empty `after`" do
+        let(:after_cursor) { "" }
+
+        it "returns the whole collection" do
+          expect(subject.records).to eq(ordered_collection)
+        end
+      end
+
       context "when given `first` and `after`" do
         let(:offset) { 1 }
         let(:first) { 2 }
@@ -56,6 +64,14 @@ RSpec.describe CursorPager::Page do
           expected = ordered_collection.first(offset)
 
           expect(subject.records).to eq(expected)
+        end
+      end
+
+      context "when given an empty `before`" do
+        let(:before_cursor) { "" }
+
+        it "returns the whole collection" do
+          expect(subject.records).to eq(ordered_collection)
         end
       end
 
