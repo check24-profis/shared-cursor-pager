@@ -12,6 +12,7 @@ require "cursor_pager/cursor_not_found_error"
 require "cursor_pager/invalid_cursor_error"
 require "cursor_pager/order_value_error"
 
+require "cursor_pager/configuration"
 require "cursor_pager/base64_encoder"
 require "cursor_pager/order_value"
 require "cursor_pager/order_values"

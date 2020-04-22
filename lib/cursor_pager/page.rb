@@ -38,7 +38,7 @@ module CursorPager
     end
 
     def cursor_for(item)
-      Base64Encoder.encode(item.id.to_s)
+      encoder.encode(item.id.to_s)
     end
 
     def records
@@ -85,17 +85,15 @@ module CursorPager
     end
 
     def before_limit_value
-      @before_limit_value ||= before && limit_value_for(before)
+      @before_limit_value ||= before.present? && limit_value_for(before)
     end
 
     def after_limit_value
-      @after_limit_value ||= after && limit_value_for(after)
+      @after_limit_value ||= after.present? && limit_value_for(after)
     end
 
     def limit_value_for(cursor)
-      id = Base64Encoder.decode(cursor)
-
-      return if id.blank?
+      id = encoder.decode(cursor)
 
       selects = order_values.map(&:select_string)
       item = relation.where(id: id).select(selects).first
@@ -103,6 +101,10 @@ module CursorPager
       raise CursorNotFoundError, cursor if item.blank?
 
       order_values.map { |value| item[value.select_alias] }
+    end
+
+    def encoder
+      CursorPager.configuration.encoder
     end
   end
 end
