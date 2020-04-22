@@ -6,6 +6,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "appraisal"
+gem "database_cleaner-active_record"
 gem "pg"
 gem "rake", "~> 12.0"
 gem "rspec", "~> 3.0"
