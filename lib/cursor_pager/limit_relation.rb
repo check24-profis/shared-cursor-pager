@@ -55,7 +55,7 @@ module CursorPager
     end
 
     def apply_last_withouth_previous_limit(relation)
-      count = base_relation.count
+      count = base_relation.size
       previous_offset = relation.offset_value || 0
       offset = previous_offset + count - [last, count].min
 
