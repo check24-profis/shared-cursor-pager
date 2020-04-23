@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "base64"
+
 module CursorPager
   # Default encoder used to encode & decode cursors.
   class Base64Encoder
