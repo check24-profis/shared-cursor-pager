@@ -1,6 +1,6 @@
 # CursorPager
 
-![build](https://github.com/askcharlie/cursor_pager/workflows/CI/badge.svg)
+![build](https://github.com/askcharlie/cursor_pager/workflows/CI/badge.svg) [![Gem Version](https://badge.fury.io/rb/cursor_pager.svg)](https://badge.fury.io/rb/cursor_pager)
 
 A small and easy-to-use library that aims to make it easy to build Rails APIs
 with cursor-based pagination (aka keyset pagination).
