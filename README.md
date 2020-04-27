@@ -45,7 +45,9 @@ To get information about the page or generate a cursor
 ```ruby
 page.previous_page?                # Tells you if there is a previous page
 page.next_page?                    # Tells you if there is a next page
-page.cursor_for(page.records.last) # Will generate a cursor for a specific item
+page.cursor_for(page.records.last) # Generates a cursor for a specific item
+page.first_cursor                  # Generates a cursor for the first item
+page.last_cursor                   # Generates a cursor for the last item
 ```
 
 To fetch the first then usres after a certain cursor

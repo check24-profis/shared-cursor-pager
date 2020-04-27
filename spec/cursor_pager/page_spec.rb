@@ -70,6 +70,36 @@ RSpec.describe CursorPager::Page do
     end
   end
 
+  describe "#first_cursor" do
+    it "returns nil if the page is empty" do
+      page = described_class.new(User.none)
+
+      expect(page.first_cursor).to be_nil
+    end
+
+    it "returns the cursor of the page's first record" do
+      users = 3.times.map { User.create }
+      page = described_class.new(User.all)
+
+      expect(page.first_cursor).to eq(page.cursor_for(users.first))
+    end
+  end
+
+  describe "#last_cursor" do
+    it "returns nil if the page is empty" do
+      page = described_class.new(User.none)
+
+      expect(page.last_cursor).to be_nil
+    end
+
+    it "returns the cursor of the page's first record" do
+      users = 3.times.map { User.create }
+      page = described_class.new(User.all)
+
+      expect(page.last_cursor).to eq(page.cursor_for(users.last))
+    end
+  end
+
   def encode_cursor(item)
     described_class.new(User.all).cursor_for(item)
   end

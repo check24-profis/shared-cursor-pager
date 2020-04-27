@@ -41,6 +41,18 @@ module CursorPager
       encoder.encode(item.id.to_s)
     end
 
+    def first_cursor
+      first_record = records.first
+
+      first_record && cursor_for(first_record)
+    end
+
+    def last_cursor
+      last_record = records.last
+
+      last_record && cursor_for(last_record)
+    end
+
     def records
       @records ||= limited_relation.to_a
     end
