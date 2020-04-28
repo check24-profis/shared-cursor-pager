@@ -67,6 +67,8 @@ page.records
 
 ## Configuration
 
+### Encoder
+
 By default cursors are base64 encoded primary keys of the records. If you wish
 to change that because you want to add encryption or something similiar, you
 can provide your own encoder class.
@@ -84,6 +86,18 @@ end
 
 CursorPager.configure do |config|
   config.encoder = CustomEncoder
+end
+```
+
+### Default & Maximum Page Size
+
+The default & maximum page sizes are configured as `nil` (unlimited) by default.
+You can however set your own values.
+
+```ruby
+CursorPager.configure do |config|
+  config.default_page_size = 25
+  config.maximum_page_size = 100
 end
 ```
 

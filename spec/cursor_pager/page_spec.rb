@@ -1,6 +1,84 @@
 # frozen_string_literal: true
 
 RSpec.describe CursorPager::Page do
+  describe "#first" do
+    it "returns the specified value if it doesn't need to be modified" do
+      page = described_class.new(User.none, first: 25)
+
+      expect(page.first).to eq(25)
+    end
+
+    it "returns `0` if a negative value was used" do
+      page = described_class.new(User.none, first: -25)
+
+      expect(page.first).to eq(0)
+    end
+
+    it "returns the `maximum_page_size` if it's smaller then the given value" do
+      CursorPager.configuration.maximum_page_size = 10
+      page = described_class.new(User.none, first: 25)
+
+      expect(page.first).to eq(10)
+
+      CursorPager.reset
+    end
+
+    context "when `first` and `last` were not provided" do
+      it "returns nil if no default or maximum were configured" do
+        page = described_class.new(User.none, first: nil, last: nil)
+
+        expect(page.first).to eq(nil)
+      end
+
+      it "returns the configured default" do
+        CursorPager.configuration.default_page_size = 10
+        page = described_class.new(User.none, first: nil, last: nil)
+
+        expect(page.first).to eq(10)
+
+        CursorPager.reset
+      end
+
+      it "returs the configured maximum when no default was configured" do
+        CursorPager.configuration.maximum_page_size = 100
+        page = described_class.new(User.none, first: nil, last: nil)
+
+        expect(page.first).to eq(100)
+
+        CursorPager.reset
+      end
+    end
+  end
+
+  describe "#last" do
+    it "returns the specified value if it doesn't need to be modified" do
+      page = described_class.new(User.none, last: 25)
+
+      expect(page.last).to eq(25)
+    end
+
+    it "returns nil if `nil` was used" do
+      page = described_class.new(User.none, last: nil)
+
+      expect(page.first).to eq(nil)
+    end
+
+    it "returns `0` if a negative value was used" do
+      page = described_class.new(User.none, last: -25)
+
+      expect(page.last).to eq(0)
+    end
+
+    it "returns the `maximum_page_size` if it's smaller then the given value" do
+      CursorPager.configuration.maximum_page_size = 10
+      page = described_class.new(User.none, last: 25)
+
+      expect(page.last).to eq(10)
+
+      CursorPager.reset
+    end
+  end
+
   describe "#previous_page?" do
     context "when given `last`" do
       it "returns true if it is smaller than the available edges" do
