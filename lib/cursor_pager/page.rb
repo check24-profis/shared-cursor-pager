@@ -26,8 +26,8 @@ module CursorPager
 
     # A capped `first` value.
     # The underlying instance variable `first_value` doesn't have limits on it.
-    # If neither `first` nor `last` is given, but `default_page_size` is
-    # configured, `default_page_size` is used for first.
+    # If neither `first` nor `last` is given, but `default_page_size` or
+    # `maximum_page_size` are configured, they will be used for first.
     def first
       @first ||= begin
                    capped = limit_pagination_argument(first_value)
