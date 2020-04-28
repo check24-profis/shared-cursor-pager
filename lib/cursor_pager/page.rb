@@ -31,7 +31,11 @@ module CursorPager
     def first
       @first ||= begin
                    capped = limit_pagination_argument(first_value)
-                   capped = default_page_size if capped.nil? && last.nil?
+
+                   if capped.nil? && last.nil?
+                     capped = default_page_size || maximum_page_size
+                   end
+
                    capped
                  end
     end

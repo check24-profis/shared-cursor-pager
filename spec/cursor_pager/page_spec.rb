@@ -23,19 +23,30 @@ RSpec.describe CursorPager::Page do
       CursorPager.reset
     end
 
-    it "returns nil if no `first` and `last` and no default was configurated" do
-      page = described_class.new(User.none, first: nil, last: nil)
+    context "when `first` and `last` were not provided" do
+      it "returns nil if no default or maximum were configured" do
+        page = described_class.new(User.none, first: nil, last: nil)
 
-      expect(page.first).to eq(nil)
-    end
+        expect(page.first).to eq(nil)
+      end
 
-    it "returns the configured default when `first` and `last` were provided" do
-      CursorPager.configuration.default_page_size = 10
-      page = described_class.new(User.none, first: nil, last: nil)
+      it "returns the configured default" do
+        CursorPager.configuration.default_page_size = 10
+        page = described_class.new(User.none, first: nil, last: nil)
 
-      expect(page.first).to eq(10)
+        expect(page.first).to eq(10)
 
-      CursorPager.reset
+        CursorPager.reset
+      end
+
+      it "returs the configured maximum when no default was configured" do
+        CursorPager.configuration.maximum_page_size = 100
+        page = described_class.new(User.none, first: nil, last: nil)
+
+        expect(page.first).to eq(100)
+
+        CursorPager.reset
+      end
     end
   end
 
