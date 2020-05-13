@@ -150,7 +150,7 @@ module CursorPager
       id = encoder.decode(cursor)
 
       selects = order_values.map(&:select_string)
-      item = relation.where(id: id).select(selects).first
+      item = ordered_relation.where(id: id).select(selects).first
 
       raise CursorNotFoundError, cursor if item.blank?
 

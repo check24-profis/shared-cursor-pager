@@ -295,18 +295,27 @@ RSpec.describe CursorPager::Page do
       let!(:user3) { User.create(id: 3) }
       let!(:user4) { User.create(id: 4) }
       let!(:user5) { User.create(id: 5) }
-      let(:relation) { User.left_outer_joins(:books).order(:id) }
       let(:ordered_collection) { [user1, user2, user3, user4, user5] }
 
-      include_examples "works with first/last/before/after arguments"
+      context "and the order values are keywords" do
+        let(:relation) { User.left_outer_joins(:books).order(:id) }
+
+        include_examples "works with first/last/before/after arguments"
+      end
+
+      context "and the order values are strings" do
+        let(:relation) { User.left_outer_joins(:books).order("id") }
+
+        include_examples "works with first/last/before/after arguments"
+      end
     end
 
     context "when ordering based on an attribute of a joined table" do
-      let!(:user5) { User.create }
-      let!(:user2) { User.create }
-      let!(:user3) { User.create }
-      let!(:user1) { User.create }
-      let!(:user4) { User.create }
+      let(:user5) { User.create }
+      let(:user2) { User.create }
+      let(:user3) { User.create }
+      let(:user1) { User.create }
+      let(:user4) { User.create }
 
       before do
         Book.create(user: user1)
