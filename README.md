@@ -1,6 +1,6 @@
 # CursorPager
 
-![build](https://github.com/askcharlie/cursor_pager/workflows/CI/badge.svg) [![Gem Version](https://badge.fury.io/rb/cursor_pager.svg)](https://badge.fury.io/rb/cursor_pager)
+![build](https://github.com/check24-profis/shared-cursor-pager/workflows/CI/badge.svg) [![Gem Version](https://badge.fury.io/rb/cursor_pager.svg)](https://badge.fury.io/rb/cursor_pager)
 
 A small and easy-to-use library that aims to make it easy to build Rails APIs
 with cursor-based pagination (aka keyset pagination).
@@ -119,5 +119,5 @@ The gem is available as open source under the terms of the [MIT License].
 
 [JSON API Cursor Pagination]: https://jsonapi.org/profiles/ethanresnick/cursor-pagination/
 [Relay's GraphQL Cursor Connection]: https://relay.dev/graphql/connections.htm
-[code of conduct]: https://github.com/askcharlie/cursor_pager/blob/master/CODE_OF_CONDUCT.md
+[code of conduct]: https://github.com/check24-profis/shared-cursor-pager/blob/master/CODE_OF_CONDUCT.md
 [MIT License]: https://opensource.org/licenses/MIT

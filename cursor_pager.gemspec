@@ -9,14 +9,14 @@ Gem::Specification.new do |spec|
   spec.email         = ["bastian.bartmann@check24.de"]
 
   spec.summary       = "Cursor-based pagination for ActiveRecord relations."
-  spec.homepage      = "https://github.com/askcharlie/cursor_pager"
+  spec.homepage      = "https://github.com/check24-profis/shared-cursor-pager"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.6.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"] =
-    "https://github.com/askcharlie/cursor_pager/blob/master/CHANGELOG.md"
+    "https://github.com/check24-profis/shared-cursor-pager/blob/master/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`
