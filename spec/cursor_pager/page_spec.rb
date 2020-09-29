@@ -132,6 +132,13 @@ RSpec.describe CursorPager::Page do
 
         expect(page.next_page?).to be(false)
       end
+
+      it "doesn't crash when a custom select is given" do
+        page = described_class.new(User.select("*"), first: 2)
+        3.times { User.create }
+
+        expect(page.next_page?).to be(true)
+      end
     end
 
     it "returns true when given a `before` cursor" do
