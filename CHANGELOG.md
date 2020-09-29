@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2020-09-29
+
 ### Fixed
 
 * Fix checking if the next page exists when a custom select is given #12
@@ -31,7 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * First implementation of cursor-pased pagination #2
 * Configurable cursor encoder #3
 
-[Unreleased]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.1...HEAD
-[0.2.0]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.0...v0.2.1
+[Unreleased]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/check24-profis/shared-cursor-pager/releases/tag/v0.1.0
