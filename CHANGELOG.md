@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+* Fix checking if the next page exists when a custom select is given #12
+
 ## [0.2.1] - 2020-05-13
 
 ### Fixed
