@@ -159,6 +159,7 @@ module CursorPager
       id = encoder.decode(cursor)
 
       selects = order_values.map(&:select_string)
+      ordered_relation.preload_values = []
       ordered_relation.unscope(:includes).where(id: id).select(selects).first
     end
   end
