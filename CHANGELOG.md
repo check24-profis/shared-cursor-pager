@@ -6,9 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.2.3] - 2020-11-23
+
 ### Fixed
 
-* Fix using before and after cursor with preloaded associations #13
+* Fix using cursors with preloaded or eager loaded associations #13
 
 ## [0.2.2] - 2020-09-29
 
@@ -36,7 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * First implementation of cursor-pased pagination #2
 * Configurable cursor encoder #3
 
-[Unreleased]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.3...HEAD
+[0.2.3]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/check24-profis/shared-cursor-pager/compare/v0.1.0...v0.2.0
