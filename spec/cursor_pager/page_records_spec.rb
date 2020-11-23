@@ -339,5 +339,119 @@ RSpec.describe CursorPager::Page do
         include_examples "works with first/last/before/after arguments"
       end
     end
+
+    context "when some associations are preloaded" do
+      let(:user) { User.create }
+
+      context "when no cursor specified" do
+        let!(:book) { Book.create(user: user) }
+
+        let(:relation) { Book.preload(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+
+      context "when the after cursor is specified" do
+        let!(:book1) { Book.create(user: user, id: 1) }
+        let!(:book2) { Book.create(user: user, id: 2) }
+
+        let(:after_cursor) { described_class.new(Book.all).cursor_for(book1) }
+        let(:relation) { Book.preload(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+
+      context "when the before cursor is specified" do
+        let!(:book1) { Book.create(user: user, id: 1) }
+        let!(:book2) { Book.create(user: user, id: 2) }
+
+        let(:before_cursor) { described_class.new(Book.all).cursor_for(book2) }
+        let(:relation) { Book.preload(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+    end
+
+    context "when some associations are eager loaded" do
+      let(:user) { User.create }
+
+      context "when no cursor specified" do
+        let!(:book) { Book.create(user: user) }
+
+        let(:relation) { Book.eager_load(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+
+      context "when the after cursor is specified" do
+        let!(:book1) { Book.create(user: user, id: 1) }
+        let!(:book2) { Book.create(user: user, id: 2) }
+
+        let(:after_cursor) { described_class.new(Book.all).cursor_for(book1) }
+        let(:relation) { Book.eager_load(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+
+      context "when the before cursor is specified" do
+        let!(:book1) { Book.create(user: user, id: 1) }
+        let!(:book2) { Book.create(user: user, id: 2) }
+
+        let(:before_cursor) { described_class.new(Book.all).cursor_for(book2) }
+        let(:relation) { Book.eager_load(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+    end
+
+    context "when some associations are included" do
+      let(:user) { User.create }
+
+      context "when no cursor specified" do
+        let!(:book) { Book.create(user: user) }
+
+        let(:relation) { Book.includes(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+
+      context "when the after cursor is specified" do
+        let!(:book1) { Book.create(user: user, id: 1) }
+        let!(:book2) { Book.create(user: user, id: 2) }
+
+        let(:after_cursor) { described_class.new(Book.all).cursor_for(book1) }
+        let(:relation) { Book.includes(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+
+      context "when the before cursor is specified" do
+        let!(:book1) { Book.create(user: user, id: 1) }
+        let!(:book2) { Book.create(user: user, id: 2) }
+
+        let(:before_cursor) { described_class.new(Book.all).cursor_for(book2) }
+        let(:relation) { Book.includes(:user).all }
+
+        it "it correctly preloads assosiations" do
+          expect(subject.records.first.association(:user).loaded?).to eq(true)
+        end
+      end
+    end
   end
 end

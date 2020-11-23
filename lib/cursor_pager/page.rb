@@ -148,14 +148,23 @@ module CursorPager
     end
 
     def limit_value_for(cursor)
-      id = encoder.decode(cursor)
-
-      selects = order_values.map(&:select_string)
-      item = ordered_relation.where(id: id).select(selects).first
+      item = limit_item_for(cursor)
 
       raise CursorNotFoundError, cursor if item.blank?
 
       order_values.map { |value| item[value.select_alias] }
+    end
+
+    def limit_item_for(cursor)
+      id = encoder.decode(cursor)
+
+      selects = order_values.map(&:select_string)
+      ordered_relation_copy = ordered_relation.dup
+
+      ordered_relation_copy.preload_values = []
+      ordered_relation_copy.eager_load_values = []
+      ordered_relation_copy
+        .unscope(:includes).where(id: id).select(selects).first
     end
   end
 end
