@@ -341,8 +341,9 @@ RSpec.describe CursorPager::Page do
     end
 
     context "when some associations are preloaded" do
+      let(:user) { User.create }
+
       context "when no cursor specified" do
-        let(:user) { User.create }
         let!(:book) { Book.create(user: user) }
 
         let(:relation) { Book.preload(:user).all }
@@ -353,7 +354,6 @@ RSpec.describe CursorPager::Page do
       end
 
       context "when the after cursor is specified" do
-        let(:user) { User.create }
         let!(:book1) { Book.create(user: user, id: 1) }
         let!(:book2) { Book.create(user: user, id: 2) }
 
@@ -366,7 +366,6 @@ RSpec.describe CursorPager::Page do
       end
 
       context "when the before cursor is specified" do
-        let(:user) { User.create }
         let!(:book1) { Book.create(user: user, id: 1) }
         let!(:book2) { Book.create(user: user, id: 2) }
 
@@ -380,8 +379,9 @@ RSpec.describe CursorPager::Page do
     end
 
     context "when some associations are eager loaded" do
+      let(:user) { User.create }
+
       context "when no cursor specified" do
-        let(:user) { User.create }
         let!(:book) { Book.create(user: user) }
 
         let(:relation) { Book.eager_load(:user).all }
@@ -392,7 +392,6 @@ RSpec.describe CursorPager::Page do
       end
 
       context "when the after cursor is specified" do
-        let(:user) { User.create }
         let!(:book1) { Book.create(user: user, id: 1) }
         let!(:book2) { Book.create(user: user, id: 2) }
 
@@ -405,7 +404,6 @@ RSpec.describe CursorPager::Page do
       end
 
       context "when the before cursor is specified" do
-        let(:user) { User.create }
         let!(:book1) { Book.create(user: user, id: 1) }
         let!(:book2) { Book.create(user: user, id: 2) }
 
@@ -419,8 +417,9 @@ RSpec.describe CursorPager::Page do
     end
 
     context "when some associations are included" do
+      let(:user) { User.create }
+
       context "when no cursor specified" do
-        let(:user) { User.create }
         let!(:book) { Book.create(user: user) }
 
         let(:relation) { Book.includes(:user).all }
@@ -431,7 +430,6 @@ RSpec.describe CursorPager::Page do
       end
 
       context "when the after cursor is specified" do
-        let(:user) { User.create }
         let!(:book1) { Book.create(user: user, id: 1) }
         let!(:book2) { Book.create(user: user, id: 2) }
 
@@ -444,7 +442,6 @@ RSpec.describe CursorPager::Page do
       end
 
       context "when the before cursor is specified" do
-        let(:user) { User.create }
         let!(:book1) { Book.create(user: user, id: 1) }
         let!(:book2) { Book.create(user: user, id: 2) }
 

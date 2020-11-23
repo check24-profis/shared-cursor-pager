@@ -162,6 +162,7 @@ module CursorPager
       ordered_relation_copy = ordered_relation.dup
 
       ordered_relation_copy.preload_values = []
+      ordered_relation_copy.eager_load_values = []
       ordered_relation_copy
         .unscope(:includes).where(id: id).select(selects).first
     end
