@@ -110,6 +110,16 @@ RSpec.describe CursorPager::Page do
       expect(page.previous_page?).to be(true)
     end
 
+    it "returns true when given a `after` cursor and "\
+      "relation includes other relation" do
+      books = 2.times.map { Book.create }
+      page = described_class.new(
+        Book.includes(:user).all, after: encode_cursor(books.first)
+      )
+
+      expect(page.previous_page?).to be(true)
+    end
+
     it "returns false when given no arguments" do
       page = described_class.new(User.all)
 
@@ -144,6 +154,16 @@ RSpec.describe CursorPager::Page do
     it "returns true when given a `before` cursor" do
       users = 2.times.map { User.create }
       page = described_class.new(User.all, before: encode_cursor(users.last))
+
+      expect(page.next_page?).to be(true)
+    end
+
+    it "returns true when given a `before` cursor and "\
+      "relation includes other relation" do
+      books = 2.times.map { Book.create }
+      page = described_class.new(
+        Book.includes(:user).all, before: encode_cursor(books.last)
+      )
 
       expect(page.next_page?).to be(true)
     end
