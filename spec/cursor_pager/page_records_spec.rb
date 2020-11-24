@@ -348,7 +348,7 @@ RSpec.describe CursorPager::Page do
 
         let(:relation) { Book.preload(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -360,7 +360,7 @@ RSpec.describe CursorPager::Page do
         let(:after_cursor) { described_class.new(Book.all).cursor_for(book1) }
         let(:relation) { Book.preload(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -372,7 +372,7 @@ RSpec.describe CursorPager::Page do
         let(:before_cursor) { described_class.new(Book.all).cursor_for(book2) }
         let(:relation) { Book.preload(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -386,7 +386,7 @@ RSpec.describe CursorPager::Page do
 
         let(:relation) { Book.eager_load(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -398,7 +398,7 @@ RSpec.describe CursorPager::Page do
         let(:after_cursor) { described_class.new(Book.all).cursor_for(book1) }
         let(:relation) { Book.eager_load(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -410,7 +410,7 @@ RSpec.describe CursorPager::Page do
         let(:before_cursor) { described_class.new(Book.all).cursor_for(book2) }
         let(:relation) { Book.eager_load(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -424,7 +424,7 @@ RSpec.describe CursorPager::Page do
 
         let(:relation) { Book.includes(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -436,7 +436,7 @@ RSpec.describe CursorPager::Page do
         let(:after_cursor) { described_class.new(Book.all).cursor_for(book1) }
         let(:relation) { Book.includes(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
@@ -448,7 +448,7 @@ RSpec.describe CursorPager::Page do
         let(:before_cursor) { described_class.new(Book.all).cursor_for(book2) }
         let(:relation) { Book.includes(:user).all }
 
-        it "it correctly preloads assosiations" do
+        it "correctly preloads assosiations" do
           expect(subject.records.first.association(:user).loaded?).to eq(true)
         end
       end
