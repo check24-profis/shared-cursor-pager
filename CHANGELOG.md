@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* Fix `Cursor::Page#next_page?` when given a grouped relation #15
+
 ## [0.2.3] - 2020-11-23
 
 ### Fixed
