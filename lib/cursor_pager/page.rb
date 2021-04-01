@@ -60,8 +60,7 @@ module CursorPager
       @next_page ||= if before_limit_value.present?
                        true
                      elsif first
-                       sliced_relation.unscope(:select).select(1)
-                         .limit(first + 1).count == first + 1
+                       sliced_relation.offset(first).exists?
                      else
                        false
                      end
