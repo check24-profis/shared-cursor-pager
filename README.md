@@ -119,5 +119,5 @@ The gem is available as open source under the terms of the [MIT License].
 
 [JSON API Cursor Pagination]: https://jsonapi.org/profiles/ethanresnick/cursor-pagination/
 [Relay's GraphQL Cursor Connection]: https://relay.dev/graphql/connections.htm
-[code of conduct]: https://github.com/check24-profis/shared-cursor-pager/blob/master/CODE_OF_CONDUCT.md
+[code of conduct]: https://github.com/check24-profis/shared-cursor-pager/blob/main/CODE_OF_CONDUCT.md
 [MIT License]: https://opensource.org/licenses/MIT

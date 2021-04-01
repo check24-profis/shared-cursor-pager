@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"] =
-    "https://github.com/check24-profis/shared-cursor-pager/blob/master/CHANGELOG.md"
+    "https://github.com/check24-profis/shared-cursor-pager/blob/main/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`
