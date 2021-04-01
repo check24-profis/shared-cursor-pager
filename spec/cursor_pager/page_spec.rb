@@ -139,6 +139,22 @@ RSpec.describe CursorPager::Page do
 
         expect(page.next_page?).to be(true)
       end
+
+      context "when given grouped relation" do
+        it "returns true" do
+          2.times.map { User.create }
+          page = described_class.new(User.all.group(:id), first: 1)
+
+          expect(page.next_page?).to be(true)
+        end
+
+        it "returns false" do
+          2.times.map { User.create }
+          page = described_class.new(User.all.group(:id), first: 2)
+
+          expect(page.next_page?).to be(false)
+        end
+      end
     end
 
     it "returns true when given a `before` cursor" do
