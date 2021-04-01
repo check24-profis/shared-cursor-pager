@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ["2.6", "2.7"]
-        activerecord-version: ["5.2", "6.0"]
+        ruby-version: ["2.6", "2.7", "3.0"]
+        activerecord-version: ["5.2", "6.0", "6.1"]
 
     services:
       db:
