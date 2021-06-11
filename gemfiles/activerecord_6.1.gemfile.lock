@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    cursor_pager (0.2.4)
+    cursor_pager (0.3.0)
       activerecord (>= 5.2.0)
 
 GEM
@@ -72,6 +72,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  ruby
   x86_64-darwin-19
 
 DEPENDENCIES
